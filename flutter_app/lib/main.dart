@@ -15,9 +15,8 @@ void main() async {
   flameUtil.setOrientation(DeviceOrientation.portraitUp);
 
   Flame.images.loadAll(<String>[
-    'crossf.png',
+    'crosshair.png',
     'start.png',
-    'calibrate.png',
     'loading.png',
     'star.png',
   ]);

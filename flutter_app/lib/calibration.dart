@@ -17,7 +17,7 @@ class Calibration {
     hint = "Aktivieren Sie den  \n Kopplungsmodus für Ihre Kopfhörer.";
     config = TextConfig(
         fontSize: game.tileSize / 3,
-        fontFamily: 'Georgia',
+        fontFamily: 'Roboto',
         textAlign: TextAlign.center);
     generateText();
   }
@@ -28,7 +28,7 @@ class Calibration {
         c,
         entireText,
         Position(
-            game.screenSize.width / 2 -
+            6 + game.screenSize.width / 2 -
                 game.tileSize / 3 * (lineLength / 4 + 1.5),
             game.screenSize.height / 2 + game.tileSize / 2));
   }
@@ -49,7 +49,7 @@ class Calibration {
     else {
       if (!game.player.setUp) {
         entireText =
-            "Halten Sie Ihren Kopf für \n 3 Sekunden in einer neutralen Position";
+            "Halten Sie Ihren Kopf für \n einen Moment still.";
       } else {
         entireText = "";
       }

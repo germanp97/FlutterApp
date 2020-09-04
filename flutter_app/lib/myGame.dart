@@ -126,7 +126,7 @@ class Player {
   final MyGame game;
   Rect playerRect;
   double sensitivity = 0.5;
-  Sprite crosshair = Sprite('crossf.png');
+  Sprite crosshair = Sprite('crosshair.png');
   bool setUp = false;
   bool calibrationPhase = false;
   int size = 4;
@@ -158,10 +158,8 @@ class Player {
     average = getAvgPosition(position);
     average[0] -= initialPos[0];
     average[1] -= initialPos[1];
-    //X coordinate
     if (isInside(average[0] * sensitivity, 0))
       playerRect = playerRect.translate(average[0] * sensitivity, 0);
-    //Y coordinate
     if (isInside(0, average[1] * sensitivity))
       playerRect = playerRect.translate(0, average[1] * sensitivity);
   }
@@ -230,7 +228,7 @@ class Score {
     textScore = "Punkte: 0";
     config = TextConfig(
         fontSize: game.tileSize,
-        fontFamily: 'Georgia',
+        fontFamily: 'Roboto',
         textAlign: TextAlign.center);
   }
 
@@ -266,7 +264,7 @@ class MyTimer {
   MyTimer(this.game, this.time) {
     config = TextConfig(
         fontSize: game.tileSize * 4,
-        fontFamily: 'Georgia',
+        fontFamily: 'Roboto',
         textAlign: TextAlign.center,
         color: Color(0x20000000));
   }
@@ -303,12 +301,7 @@ class MyTimer {
 class StartButton {
   final MyGame game;
   Rect textContainer;
-  Sprite startDisable = Sprite('start.png');
-  Sprite startUp = Sprite('start.png');
-  Sprite startDown = Sprite('start.png');
-  Sprite calibrateUp = Sprite('calibrate.png');
-  Sprite calibrateDown = Sprite('calibrate.png');
-  Sprite calibrateDisable = Sprite('calibrate.png');
+  Sprite startButton = Sprite('start.png');
   Sprite loading = Sprite('loading.png');
   bool up;
   bool start = false;
@@ -332,22 +325,10 @@ class StartButton {
   }
 
   void render(Canvas c) {
-    if (!game.bluetoothManager.connected) {
+    if (!start) {
       loading.renderRect(c, textContainer);
-    } else {
-      if (!game.player.setUp) {
-        if (!game.player.calibrationPhase) {
-          if (up)
-            calibrateDown.renderRect(c, textContainer);
-        } else {
-          if (up) calibrateDisable.renderRect(c, textContainer);
-        }
-      } else {
-        if (!start) {
-          if (up) startUp.renderRect(c, textContainer);
-        }
-      }
     }
+    startButton.renderRect(c, textContainer);
   }
 
   void update(double t) {}
@@ -361,7 +342,6 @@ class StartButton {
     if (game.bluetoothManager.connected) {
       if (!game.player.setUp) {
         if (!game.player.calibrationPhase) {
-          //Not started calibrating
           game.player.calibrationPhase = true;
           game.timer.start();
         }
@@ -380,6 +360,8 @@ class Target {
   final MyGame game;
   Rect targetRect;
   Sprite box = Sprite('star.png');
+  double i = 0;
+  int counter = 0;
 
   Target(this.game, double x, double y) {
     targetRect = Rect.fromLTWH(x, y, 2 * game.tileSize, 2 * game.tileSize);
@@ -390,10 +372,14 @@ class Target {
   }
 
   void update(double t) {
-    targetRect = Rect.fromLTWH(targetRect.left, targetRect.top + (t * 1),
-        2 * game.tileSize, 2 * game.tileSize);
-    if (targetRect.top > game.screenSize.height) {
-      game.stopGame();
+    counter++;
+    if(counter % 3 == 0) {
+      i += 0.05;
     }
+      targetRect = Rect.fromLTWH(targetRect.left,
+          targetRect.top + (t * (1 + i)), 2 * game.tileSize, 2 * game.tileSize);
+      if (targetRect.top > game.screenSize.height) {
+        game.stopGame();
+      }
   }
 }
