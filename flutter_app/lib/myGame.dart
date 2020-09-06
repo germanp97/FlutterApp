@@ -302,7 +302,6 @@ class StartButton {
   final MyGame game;
   Rect textContainer;
   Sprite startButton = Sprite('start.png');
-  Sprite loading = Sprite('loading.png');
   bool up;
   bool start = false;
   double left;
@@ -325,9 +324,6 @@ class StartButton {
   }
 
   void render(Canvas c) {
-    if (!start) {
-      loading.renderRect(c, textContainer);
-    }
     startButton.renderRect(c, textContainer);
   }
 

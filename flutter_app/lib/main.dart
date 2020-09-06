@@ -17,7 +17,6 @@ void main() async {
   Flame.images.loadAll(<String>[
     'crosshair.png',
     'start.png',
-    'loading.png',
     'star.png',
   ]);
 
